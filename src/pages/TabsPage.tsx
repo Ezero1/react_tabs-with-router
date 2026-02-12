@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import classNames from 'classnames';
 
 const tabs = [
@@ -11,31 +13,46 @@ const tabs = [
 export const TabsPage: React.FC = () => {
   const { tabId } = useParams();
 
-  const activeTab = tabs.find(tab => tab.id === tabId);
+  const selectedIndex = tabs.findIndex(tab => tab.id === tabId);
 
   return (
     <>
       <h1 className="title">Tabs page</h1>
 
-      <div className="tabs is-boxed">
-        <ul>
-          {tabs.map(tab => (
-            <li
-              key={tab.id}
-              data-cy="Tab"
-              className={classNames({
-                'is-active': tabId === tab.id,
-              })}
-            >
-              <Link to={`/tabs/${tab.id}`}>{tab.title}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Tabs
+        selectedIndex={selectedIndex}
+        onSelect={() => {}}
+        selectedTabClassName="is-active"
+      >
+        <div className="tabs is-boxed">
+          <TabList>
+            {tabs.map(tab => (
+              <Tab
+                key={tab.id}
+                data-cy="Tab"
+                className={classNames('navbar-item', {
+                  'is-active': tabId === tab.id,
+                })}
+              >
+                <Link
+                  to={`/tabs/${tab.id}`}
+                  style={{ display: 'block', width: '100%', height: '100%' }}
+                >
+                  {tab.title}
+                </Link>
+              </Tab>
+            ))}
+          </TabList>
+        </div>
 
-      <div className="block" data-cy="TabContent">
-        {activeTab ? activeTab.content : 'Please select a tab'}
-      </div>
+        <div className="block" data-cy="TabContent">
+          {selectedIndex === -1 && 'Please select a tab'}
+
+          {tabs.map(tab => (
+            <TabPanel key={tab.id}>{tab.content}</TabPanel>
+          ))}
+        </div>
+      </Tabs>
     </>
   );
 };
