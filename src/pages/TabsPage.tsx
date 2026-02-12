@@ -10,6 +10,7 @@ const tabs = [
 
 export const TabsPage: React.FC = () => {
   const { tabId } = useParams();
+
   const activeTab = tabs.find(tab => tab.id === tabId);
 
   return (
@@ -22,7 +23,9 @@ export const TabsPage: React.FC = () => {
             <li
               key={tab.id}
               data-cy="Tab"
-              className={classNames({ 'is-active': tabId === tab.id })}
+              className={classNames({
+                'is-active': tabId === tab.id,
+              })}
             >
               <Link to={`/tabs/${tab.id}`}>{tab.title}</Link>
             </li>

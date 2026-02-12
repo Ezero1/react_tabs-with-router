@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -6,9 +7,9 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import './App.scss';
 
 import { Nav } from './components/Nav';
+import { HomePage } from './pages/homePage';
 import { TabsPage } from './pages/TabsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { HomePage } from './pages/homePage';
 
 export const App: React.FC = () => (
   <>
@@ -20,8 +21,7 @@ export const App: React.FC = () => (
           <Route path="/" element={<HomePage />} />
           <Route path="home" element={<Navigate to="/" replace />} />
 
-          {/* Вкладені роути для Tabs */}
-          <Route path="tabs" element={<TabsPage />}>
+          <Route path="tabs">
             <Route index element={<TabsPage />} />
             <Route path=":tabId" element={<TabsPage />} />
           </Route>
